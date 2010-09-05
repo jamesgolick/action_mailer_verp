@@ -41,7 +41,7 @@ describe "ActionMailerVerp" do
       it "raises an error because that is not supported" do
         lambda {
           MyMailer.create_multiple_froms
-        }.should raise_error(ActionMailerVerp::FromRewriter::MultipleFromsError)
+        }.should raise_error(ActionMailerVerp::VERPMail::MultipleFromsError)
       end
     end
 
@@ -49,7 +49,7 @@ describe "ActionMailerVerp" do
       it "raises an error because that is not supported" do
         lambda {
           MyMailer.create_multiple_recipients
-        }.should raise_error(ActionMailerVerp::FromRewriter::MultipleRecipientsError)
+        }.should raise_error(ActionMailerVerp::VERPMail::MultipleRecipientsError)
       end
     end
   end
