@@ -16,6 +16,12 @@ describe "ActionMailerVerp" do
       recipients "asdf@bsdf.com"
       subject "An exciting new email from MyCompany"
     end
+
+    def multiple_recipients
+      from "MyCompany <donotreply@mycompany.com>"
+      recipients ["asdf@bsdf.com", "bsdf@csdf.com"]
+      subject "An exciting new email from MyCompany"
+    end
   end
 
   describe "ActionMailerVerp::FromRewriter" do
@@ -37,6 +43,14 @@ describe "ActionMailerVerp" do
         lambda {
           MyMailer.create_multiple_froms
         }.should raise_error(ActionMailerVerp::FromRewriter::MultipleFromsError)
+      end
+    end
+
+    describe "with multiple recipients" do
+      it "raises an error because that is not supported" do
+        lambda {
+          MyMailer.create_multiple_recipients
+        }.should raise_error(ActionMailerVerp::FromRewriter::MultipleRecipientsError)
       end
     end
   end
