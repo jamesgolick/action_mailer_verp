@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "ActionMailerVerp" do
   class MyMailer < ActionMailer::Base
-    include ActionMailerVerp::FromRewriter
+    include ActionMailerVerp::VERPMail
     self.template_root = File.dirname(__FILE__) + "/templates"
 
     def some_mail(address)
@@ -24,7 +24,7 @@ describe "ActionMailerVerp" do
     end
   end
 
-  describe "ActionMailerVerp::FromRewriter" do
+  describe "ActionMailerVerp::VERPMail" do
     describe "with one from address" do
       before do
         @mail = MyMailer.create_some_mail("james@example.com")

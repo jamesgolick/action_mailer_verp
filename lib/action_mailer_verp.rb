@@ -1,7 +1,7 @@
 require 'actionmailer'
 
 module ActionMailerVerp
-  module FromRewriter
+  module VERPMail
     class MultipleFromsError < ArgumentError; end
     class MultipleRecipientsError < ArgumentError; end
 
@@ -11,12 +11,12 @@ module ActionMailerVerp
 
     def create_mail_with_verp
       create_mail_without_verp
-      verpify_from(@mail)
+      verpify(@mail)
       @mail
     end
 
     private
-      def verpify_from(mail)
+      def verpify(mail)
         if mail.from_addrs.length > 1
           raise MultipleFromsError, "Multiple from addresses not supported."
         end
