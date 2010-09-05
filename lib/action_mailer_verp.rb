@@ -25,9 +25,10 @@ module ActionMailerVerp
           raise MultipleRecipientsError, "Multiple recipients not supported."
         end
 
-        from      = mail.from_addrs.first
-        local     = "#{from.local}+#{mail.to.first.gsub("@", "=")}"
-        mail.from = "#{from.name} <#{local}@#{from.domain}>"
+        from                = mail.from_addrs.first
+        local               = "#{from.local}+#{mail.to.first.gsub("@", "=")}"
+        return_path         = "#{local}@#{from.domain}"
+        mail['return-path'] = return_path
       end
   end
 end

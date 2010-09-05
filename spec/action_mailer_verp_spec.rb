@@ -30,11 +30,10 @@ describe "ActionMailerVerp" do
         @mail = MyMailer.create_some_mail("james@example.com")
       end
 
-      it "rewrites the from address to be VERP compatible" do
-        addr = @mail.from_addrs.first
+      it "sets the return-path to the VERP address" do
+        addr = @mail['return-path'].addr
         addr.local.should == "donotreply+james=example.com"
         addr.domain.should == "mycompany.com"
-        addr.name.should == "MyCompany"
       end
     end
     
