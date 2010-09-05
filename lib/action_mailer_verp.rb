@@ -2,6 +2,8 @@ require 'actionmailer'
 
 module ActionMailerVerp
   module FromRewriter
+    class MultipleFromsError < ArgumentError; end
+
     def self.included(klass)
       klass.send(:alias_method_chain, :create_mail, :verp)
     end
@@ -14,6 +16,10 @@ module ActionMailerVerp
 
     private
       def verpify_from(mail)
+        if mail.from_addrs.length > 1
+          raise MultipleFromsError, "Multiple from addresses not supported."
+        end
+
         from      = mail.from_addrs.first
         local     = "#{from.local}+#{mail.to.first.gsub("@", "=")}"
         mail.from = "#{from.name} <#{local}@#{from.domain}>"
