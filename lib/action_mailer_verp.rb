@@ -1,4 +1,6 @@
 require 'actionmailer'
+require 'action_mailer_verp/bounce_processor'
+require 'action_mailer_verp/pop_fetcher'
 
 module ActionMailerVerp
   module VERPMail
