@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{action_mailer_verp}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Golick"]
-  s.date = %q{2010-09-05}
+  s.date = %q{2010-09-07}
   s.description = %q{Send VERP emails with actionmailer.}
   s.email = %q{jamesgolick@gmail.com}
   s.extra_rdoc_files = [
@@ -25,7 +25,10 @@ Gem::Specification.new do |s|
      "VERSION",
      "action_mailer_verp.gemspec",
      "lib/action_mailer_verp.rb",
+     "lib/action_mailer_verp/bounce_processor.rb",
+     "lib/action_mailer_verp/pop_fetcher.rb",
      "spec/action_mailer_verp_spec.rb",
+     "spec/bounce_processor_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/templates/my_mailer/multiple_froms.erb",
@@ -39,6 +42,7 @@ Gem::Specification.new do |s|
   s.summary = %q{Send VERP emails with actionmailer.}
   s.test_files = [
     "spec/action_mailer_verp_spec.rb",
+     "spec/bounce_processor_spec.rb",
      "spec/spec_helper.rb"
   ]
 
@@ -49,13 +53,16 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_runtime_dependency(%q<actionmailer>, ["~> 2.3.1"])
+      s.add_runtime_dependency(%q<tmail>, ["~> 1.2.7.1"])
     else
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_dependency(%q<actionmailer>, ["~> 2.3.1"])
+      s.add_dependency(%q<tmail>, ["~> 1.2.7.1"])
     end
   else
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
     s.add_dependency(%q<actionmailer>, ["~> 2.3.1"])
+    s.add_dependency(%q<tmail>, ["~> 1.2.7.1"])
   end
 end
 
