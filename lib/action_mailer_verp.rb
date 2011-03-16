@@ -1,4 +1,4 @@
-require 'actionmailer'
+require 'action_mailer'
 require 'action_mailer_verp/bounce_processor'
 require 'action_mailer_verp/pop_fetcher'
 
@@ -7,14 +7,10 @@ module ActionMailerVerp
     class MultipleFromsError < ArgumentError; end
     class MultipleRecipientsError < ArgumentError; end
 
-    def self.included(klass)
-      klass.send(:alias_method_chain, :create_mail, :verp)
-    end
-
-    def create_mail_with_verp
-      create_mail_without_verp
-      verpify(@mail)
-      @mail
+    def mail(*args, &block)
+      m = super
+      verpify(m)
+      m
     end
 
     private
@@ -27,9 +23,11 @@ module ActionMailerVerp
           raise MultipleRecipientsError, "Multiple recipients not supported."
         end
 
-        from                = mail.from_addrs.first
-        local               = "#{from.local}+#{mail.to.first.gsub("@", "=")}"
-        return_path         = "#{local}@#{from.domain}"
+        from_parts          = mail.from_addrs.first.split(/@/)
+        from_local          = from_parts.first
+        from_domain         = from_parts.last
+        local               = "#{from_local}+#{mail.to.first.gsub("@", "=")}"
+        return_path         = "#{local}@#{from_domain}"
         mail['return-path'] = return_path
       end
   end
