@@ -1,5 +1,5 @@
 require 'net/pop'
-require 'tmail/mail'
+require 'mail'
 
 module ActionMailerVerp
   class PopFetcher
@@ -22,7 +22,7 @@ module ActionMailerVerp
 
     def each
       connection.each_mail do |e|
-        yield TMail::Mail.parse(e.pop)
+        yield Mail.read_from_string(e.pop)
         e.delete
       end
       connection.finish
